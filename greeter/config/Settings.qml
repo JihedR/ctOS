@@ -27,7 +27,7 @@ Singleton {
     ConfigManager {
         id: stateManager
         path: Paths.statePath("greeter.state")
-        writeEnabled: root.isGreetd
+        writeEnabled: root.isGreetd || root.isKiosk
 
         adapter: JsonAdapter {
             id: stateAdapter
