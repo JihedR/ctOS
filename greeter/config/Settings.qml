@@ -16,7 +16,8 @@ Singleton {
 
     ConfigManager {
         id: globalManager
-        path: Paths.globalConfigPath("greeter.config")
+        path: Env.get("CONFIG") || Paths.globalConfigPath("greeter.config")
+        writeEnabled: false
 
         adapter: JsonAdapter {
             id: globalAdapter
