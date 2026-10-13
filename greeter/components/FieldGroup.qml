@@ -73,6 +73,18 @@ ColumnLayout {
             AuthManager.respond(passwordField.text);
         }
 
+        Connections {
+            target: AuthManager
+
+            function onStateChanged() {
+                // a failed attempt leaves its text in the field; without this
+                // the retry is appended to it and fails again
+                if (AuthManager.state === AuthManager.State.Ready) {
+                    passwordField.text = "";
+                }
+            }
+        }
+
         onActiveFocusChanged: {
             if (activeFocus) {
                 FocusManager.requestFocus(passwordField);
