@@ -24,7 +24,9 @@ Item {
         adapter: config.adapter
         path: config.path
 
-        onAdapterChanged: !fileView.path.startsWith("/etc") && config.writeEnabled ? writeAdapter() : () => {}
+        // adapterUpdated, not adapterChanged: the latter fires on creation,
+        // before the file is read, and overwrote it with the defaults
+        onAdapterUpdated: !fileView.path.startsWith("/etc") && config.writeEnabled ? writeAdapter() : () => {}
 
         onLoadFailed: function (error) {
             if (error !== FileViewError.FileNotFound) {
