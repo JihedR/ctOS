@@ -131,6 +131,10 @@ Singleton {
     }
 
     function getLaunchCommand() {
+        if (Settings.launchCommand && Settings.launchCommand.length) {
+            return Settings.launchCommand;
+        }
+
         if (!activeDesktop || !activeDesktop.exec) {
             return [];
         }
