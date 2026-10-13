@@ -29,6 +29,7 @@ Singleton {
         id: stateManager
         path: Paths.statePath("greeter.state")
         writeEnabled: root.isGreetd || root.isKiosk
+        optional: true
 
         adapter: JsonAdapter {
             id: stateAdapter
