@@ -8,6 +8,17 @@ JsonObject {
     property list<string> launchOverride: []
     property string monitor: ""
 
+    // var, not a nested JsonObject: "class" can't be a QML property name
+    property var fakeIdentity: ({
+            "id": "ADM-843",
+            "class": "L5_PROV",
+            "fullName": "Blume Admin"
+        })
+    property var fakeStatus: ({
+            "env": "Workstation",
+            "node": "109.389.013.301"
+        })
+
     component ModeSettings: JsonObject {
         /**
         * Animation Configuration:

@@ -62,6 +62,8 @@ Singleton {
 
     readonly property string monitor: general.modes[modeKey].monitor || general.monitor || Quickshell.screens[0].name
     readonly property string fontFamily: general.fontFamily
+    readonly property var fakeIdentity: general.fakeIdentity
+    readonly property var fakeStatus: general.fakeStatus
 
     enum AnimationMode {
         None = 0,
