@@ -40,6 +40,21 @@ Singleton {
             logger.info("Authentication success.");
             handler.success();
         }
+
+        function onLaunched() {
+            // greetd accepted start_session; only now is it safe to tear down
+            // the greeter compositor
+            const exitCommand = SessionManager.getExitCommand();
+            logger.info(`Session launched. Exiting Greeter: ${exitCommand.join(" ") || "<none>"}`);
+
+            if (exitCommand.length) {
+                Quickshell.execDetached(exitCommand);
+            }
+        }
+
+        function onError(error) {
+            logger.error(`Greetd error: ${error}`);
+        }
     }
 
     Connections {
@@ -87,15 +102,14 @@ Singleton {
 
     function finish() {
         const launchCommand = SessionManager.getLaunchCommand();
-        const exitCommand = SessionManager.getExitCommand();
 
-        logger.info(`Launching: ${launchCommand.join(" ")}`);
-        logger.info(`Exiting Greeter: ${exitCommand.join(" ") || "<none>"}`);
+        logger.info(`Launching: ${launchCommand.join(" ")} (greetd state: ${GreetdState.toString(Greetd.state)})`);
 
-        Greetd.launch(launchCommand);
-
-        if (exitCommand.length) {
-            Quickshell.execDetached(exitCommand);
+        if (Greetd.state !== GreetdState.ReadyToLaunch) {
+            logger.error("Greetd is not ready to launch; the session can't start.");
         }
+
+        // the exit command runs from onLaunched, once greetd has the request
+        Greetd.launch(launchCommand);
     }
 }
