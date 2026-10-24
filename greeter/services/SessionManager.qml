@@ -254,7 +254,10 @@ Singleton {
                 return nameMatch && uwsmMatch;
             });
 
-            _firstDesktop = detectedDesktop || (desktops.length > 0 ? desktops[0] : null);
+            // no state file or no match: prefer the uwsm-managed entry over glob order
+            const uwsmDesktop = desktops.find(d => d.exec.trim().startsWith("uwsm "));
+
+            _firstDesktop = detectedDesktop || uwsmDesktop || (desktops.length > 0 ? desktops[0] : null);
         }
 
         function commit() {

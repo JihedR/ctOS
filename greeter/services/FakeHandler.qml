@@ -53,6 +53,7 @@ Singleton {
     }
 
     function finish() {
+        logger.info(`Would launch: ${SessionManager.getLaunchCommand().join(" ")}`);
         Qt.quit();
     }
 }
